@@ -30,7 +30,6 @@ class CarInterface(CarInterfaceBase):
     ret.safetyModel = car.CarParams.SafetyModel.hyundaiLegacy
     if candidate in [CAR.SONATA]:
       ret.safetyModel = car.CarParams.SafetyModel.hyundai
-    #ret.radarOffCan = True
 
     # Most Hyundai car ports are community features for now
     ret.communityFeature = True
@@ -314,8 +313,9 @@ class CarInterface(CarInterfaceBase):
                    if 1056 in fingerprint[1] and 1296 not in fingerprint[1] else 2 \
                    if 1056 in fingerprint[2] else -1
     ret.radarOffCan = ret.sccBus == -1
-    ret.openpilotLongitudinalControl = Params().get("LongControlSelect", encoding='utf8') == "1"
     ret.pcmCruise = not ret.radarOffCan
+
+    ret.openpilotLongitudinalControl = Params().get("LongControlSelect", encoding='utf8') == "1"
 
     # set safety_hyundai_community only for non-SCC, MDPS harrness or SCC harrness cars or cars that have unknown issue
     if ret.radarOffCan or ret.mdpsBus == 1 or ret.openpilotLongitudinalControl or ret.sccBus == 1 or Params().get("LongControlSelect", encoding='utf8') == "0":
@@ -337,7 +337,8 @@ class CarInterface(CarInterfaceBase):
       self.CP.pcmCruise = True
 
     # most HKG cars has no long control
-    if self.mad_mode_enabled and not self.CC.longcontrol:
+    #if self.mad_mode_enabled and not self.CC.longcontrol:
+    if self.mad_mode_enabled or self.CC.longcontrol:
       ret.cruiseState.enabled = ret.cruiseState.available
       ret.brakePressed = ret.gasPressed = False
 
@@ -388,7 +389,7 @@ class CarInterface(CarInterfaceBase):
       events.add(EventName.turningIndicatorOn)
     # if self.CS.lkas_button_on != self.CS.prev_lkas_button:
       # events.add(EventName.buttonCancel)
-    if self.mad_mode_enabled and not self.CC.longcontrol and EventName.pedalPressed in events.events:
+    if self.mad_mode_enabled and EventName.pedalPressed in events.events:
       events.events.remove(EventName.pedalPressed)
 
   # handle button presses

@@ -7,6 +7,7 @@
 
 #include "selfdrive/common/params.h"
 #include "selfdrive/ui/qt/request_repeater.h"
+#include "selfdrive/ui/qt/util.h"
 
 const double MILE_TO_KM = 1.60934;
 
@@ -41,22 +42,21 @@ DriveStats::DriveStats(QWidget* parent) : QFrame(parent) {
     grid_layout->addWidget(labels.distance_unit = newLabel(getDistanceUnit(), "unit"), row + 2, 2, Qt::AlignCenter);
     grid_layout->addWidget(new QLabel("────────────────────────────────"), 8, 0, 1, 3, Qt::AlignCenter);
 
-    grid_layout->addWidget(new QLabel("「 openpilot by crwusiz branch 」"), 9, 0, 1, 3, Qt::AlignCenter);
-
+    grid_layout->addWidget(new QLabel("━ crwusiz branch ━"), 9, 0, 1, 3, Qt::AlignCenter);
+    grid_layout->addWidget(new QLabel("「 Easy Driving \U0001f60b 」"), 11, 0, 1, 3, Qt::AlignCenter);
     main_layout->addLayout(grid_layout);
   };
 
   add_stats_layouts("ALL TIME", all_);
   main_layout->addStretch();
   //add_stats_layouts("PAST WEEK", week_);
-
-  std::string dongle_id = Params().get("DongleId");
-  if (util::is_valid_dongle_id(dongle_id)) {
-    std::string url = "https://api.commadotai.com/v1.1/devices/" + dongle_id + "/stats";
-    RequestRepeater* repeater = new RequestRepeater(this, QString::fromStdString(url), "ApiCache_DriveStats", 30);
+/*
+  if (auto dongleId = getDongleId()) {
+    QString url = CommaApi::BASE_URL + "/v1.1/devices/" + *dongleId + "/stats";
+    RequestRepeater* repeater = new RequestRepeater(this, url, "ApiCache_DriveStats", 30);
     QObject::connect(repeater, &RequestRepeater::receivedResponse, this, &DriveStats::parseResponse);
   }
-
+*/
   setStyleSheet(R"(
     DriveStats {
       background-color: #333333;

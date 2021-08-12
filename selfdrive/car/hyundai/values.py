@@ -649,13 +649,27 @@ FW_VERSIONS = {
     ],
   },
   CAR.NIRO_HEV: {
-    (Ecu.fwdRadar, 0x7d0, None): [b'\xf1\x00DEhe SCC H-CUP      1.01 1.02 96400-G5100         ',],
-    (Ecu.engine, 0x7e0, None): [b'\xf1\x816H6F4051\000\000\000\000\000\000\000\000',],
-    (Ecu.eps, 0x7d4, None): [b'\xf1\000DE  MDPS C 1.00 1.09 56310G5301\000 4DEHC109',],
-    (Ecu.fwdCamera, 0x7c4, None): [b'\xf1\x00DEP MFC  AT USA LHD 1.00 1.01 95740-G5010 170424',],
+    (Ecu.fwdRadar, 0x7d0, None): [
+      b'\xf1\x00DEhe SCC H-CUP      1.01 1.02 96400-G5100         ',
+      b'\xf1\x00DEhe SCC FHCUP      1.00 1.00 99110-G5600         ',
+    ],
+    (Ecu.engine, 0x7e0, None): [
+      b'\xf1\x816H6F4051\000\000\000\000\000\000\000\000',
+      b'\xf1\x816H6G5051\x00\x00\x00\x00\x00\x00\x00\x00',
+    ],
+    (Ecu.eps, 0x7d4, None): [
+      b'\xf1\000DE  MDPS C 1.00 1.09 56310G5301\000 4DEHC109',
+      b'\xf1\x00DE  MDPS C 1.00 1.01 56310G5520\x00 4DEPC101',
+    ],
+    (Ecu.fwdCamera, 0x7c4, None): [
+      b'\xf1\x00DEP MFC  AT USA LHD 1.00 1.01 95740-G5010 170424',
+      b'\xf1\x00DEH MFC  AT USA LHD 1.00 1.07 99211-G5000 201221',
+    ],
     (Ecu.transmission, 0x7e1, None): [
       b"\xf1\x816U3J2051\000\000\xf1\0006U3H0_C2\000\0006U3J2051\000\000PDE0G16NS2\xf4\'\\\x91",
       b'\xf1\x816U3J2051\000\000\xf1\0006U3H0_C2\000\0006U3J2051\000\000PDE0G16NS2\000\000\000\000',
+      b'\xf1\x816U3J9051\x00\x00\xf1\x006U3H1_C2\x00\x006U3J9051\x00\x00HDE0G16NL3\x00\x00\x00\x00',
+      b'\xf1\x816U3J9051\x00\x00\xf1\x006U3H1_C2\x00\x006U3J9051\x00\x00HDE0G16NL3\xb9\xd3\xfaW',
     ],
   },
   CAR.SELTOS: {

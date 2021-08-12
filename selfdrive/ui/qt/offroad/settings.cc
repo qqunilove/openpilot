@@ -146,9 +146,7 @@ DevicePanel::DevicePanel(QWidget* parent) : QWidget(parent) {
   main_layout->setSpacing(20);
   Params params = Params();
 
-  QString dongle = QString::fromStdString(params.get("DongleId", false));
-  //main_layout->addWidget(new LabelControl("Dongle ID", dongle));
-  main_layout->addWidget(new LabelControl("동글 ID", dongle));
+  main_layout->addWidget(new LabelControl("Dongle ID", getDongleId().value_or("N/A")));
 /*
   main_layout->addWidget(horizontal_line());
 
@@ -297,8 +295,6 @@ SoftwarePanel::SoftwarePanel(QWidget* parent) : QWidget(parent) {
   QWidget *widgets[] = {versionLbl, gitRemoteLbl, gitBranchLbl, gitCommitLbl, osVersionLbl};
   for (int i = 0; i < std::size(widgets); ++i) {
     main_layout->addWidget(widgets[i]);
-    if (i < std::size(widgets) - 1) {
-    }
   }
 
   fs_watch = new QFileSystemWatcher(this);

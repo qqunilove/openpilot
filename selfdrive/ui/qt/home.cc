@@ -125,7 +125,7 @@ OffroadHome::OffroadHome(QWidget* parent) : QFrame(parent) {
 //  statsAndSetup->setSpacing(30);
 //  statsAndSetup->addWidget(new DriveStats, 1);
   DriveStats* drive = new DriveStats();
-  drive->setFixedSize(800, 800);
+  drive->setFixedSize(700, 700);
   statsAndSetup->addWidget(drive);
   statsAndSetup->addWidget(new SetupWidget);
 
@@ -162,10 +162,10 @@ OffroadHome::OffroadHome(QWidget* parent) : QFrame(parent) {
       font-size: 55px;
     }
   )");
-  refresh();
 }
 
 void OffroadHome::showEvent(QShowEvent *event) {
+  refresh();
   timer->start(10 * 1000);
 }
 
@@ -175,7 +175,7 @@ void OffroadHome::hideEvent(QHideEvent *event) {
 
 void OffroadHome::refresh() {
 //  date->setText(QDateTime::currentDateTime().toString("dddd, MMMM d"));
-  date->setText(QDateTime::currentDateTime().toString("\U0001f4c5 yyyy년 M월 d일")+"      「 Easy Driving \U0001f60b 」");
+  date->setText(QDateTime::currentDateTime().toString("\U0001f4c5 yyyy년 M월 d일"));
 
   bool updateAvailable = update_widget->refresh();
   int alerts = alerts_widget->refresh();

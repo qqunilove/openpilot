@@ -9,13 +9,21 @@
 #include "selfdrive/hardware/hw.h"
 
 QString getBrand() {
-  //return Params().getBool("Passive") ? "dashcam" : "openpilot";
-  return Params().getBool("Passive") ? "대시캠" : "오픈파일럿";
+  return Params().getBool("Passive") ? "dashcam" : "openpilot";
 }
 
 QString getBrandVersion() {
-  //return getBrand() + " v" + QString::fromStdString(Params().get("Version")).left(14).trimmed();
-  return "v" + QString::fromStdString(Params().get("Version")).left(14).trimmed();
+  return getBrand() + " v" + QString::fromStdString(Params().get("Version")).left(14).trimmed();
+}
+
+std::optional<QString> getDongleId() {
+  std::string id = Params().get("DongleId");
+
+  if (!id.empty() && (id != "UnregisteredDevice")) {
+    return QString::fromStdString(id);
+  } else {
+    return {};
+  }
 }
 
 void configFont(QPainter &p, const QString &family, int size, const QString &style) {

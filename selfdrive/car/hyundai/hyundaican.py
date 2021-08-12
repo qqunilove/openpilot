@@ -72,13 +72,23 @@ def create_clu11(packer, frame, bus, clu11, button, speed):
   values["CF_Clu_AliveCnt1"] = frame % 0x10
   return packer.make_can_msg("CLU11", bus, values)
 
-def create_lfahda_mfc(packer, enabled, hda_set_speed=0):
+def create_lfahda_mfc(packer, enabled, active):
   values = {
     "LFA_Icon_State": 2 if enabled else 0,
-    "HDA_Active": 1 if hda_set_speed else 0,
-    "HDA_Icon_State": 2 if hda_set_speed else 0,
-    "HDA_VSetReq": hda_set_speed,
+    "HDA_Active": 1 if active > 0 else 0,
+    "HDA_Icon_State": 2 if active > 0 else 0,
+    # "HDA_VSetReq": 0,
   }
+
+  return packer.make_can_msg("LFAHDA_MFC", 0, values)
+
+def create_hda_mfc(packer, active):
+  values = {
+    "HDA_USM": 2,
+    "HDA_Active": 1 if active > 0 else 0,
+    "HDA_Icon_State": 2 if active > 0 else 0,
+  }
+
   return packer.make_can_msg("LFAHDA_MFC", 0, values)
 
 def create_mdps12(packer, frame, mdps12):
@@ -94,9 +104,12 @@ def create_mdps12(packer, frame, mdps12):
 
   return packer.make_can_msg("MDPS12", 2, values)
 
-def create_scc11(packer, frame, enabled, set_speed, lead_visible, scc_live, scc11):
+def create_scc11(packer, frame, enabled, set_speed, lead_visible, scc_live, scc11, active_cam):
   values = copy.copy(scc11)
   values["AliveCounterACC"] = frame // 2 % 0x10
+  values["Navi_SCC_Camera_Act"] = 2 if active_cam else 0
+  values["Navi_SCC_Camera_Status"] = 2 if active_cam else 0
+
   if not scc_live:
     values["MainMode_ACC"] = 1
     values["VSetDis"] = set_speed
