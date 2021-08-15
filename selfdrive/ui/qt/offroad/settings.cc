@@ -368,7 +368,6 @@ QWidget * network_panel(QWidget * parent) {
   layout->addWidget(androidBtn);
 
   layout->addWidget(horizontal_line());
-#endif
 
   // SSH key management
   layout->addWidget(new SshToggle());
@@ -469,7 +468,9 @@ QWidget * network_panel(QWidget * parent) {
   layout->addWidget(realdataclearbtn);
 
   layout->addStretch(1);
+#else
   Networking *w = new Networking(parent);
+#endif
   return w;
 }
 
