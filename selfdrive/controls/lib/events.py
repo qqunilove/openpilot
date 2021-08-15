@@ -248,6 +248,8 @@ def auto_lane_change_alert(CP, sm, metric):
 EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, bool], Alert]]]] = {
   # ********** events with no alerts **********
 
+  EventName.stockFcw: {},
+
   # ********** events only containing alerts displayed in all states **********
 
   EventName.joystickDebug: {

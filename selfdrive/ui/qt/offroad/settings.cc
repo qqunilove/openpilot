@@ -469,6 +469,9 @@ QWidget * network_panel(QWidget * parent) {
   layout->addWidget(realdataclearbtn);
 
   layout->addStretch(1);
+#else
+  Networking *w = new Networking(parent);
+#endif
   return w;
 }
 
