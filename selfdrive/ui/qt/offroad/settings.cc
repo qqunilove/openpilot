@@ -348,10 +348,11 @@ QStringList get_list(const char* path){
 }
 
 QWidget * network_panel(QWidget * parent) {
+#ifdef QCOM
   QWidget *w = new QWidget(parent);
   QVBoxLayout *layout = new QVBoxLayout(w);
   layout->setSpacing(20);
-#ifdef QCOM
+
   //auto wifiBtn = new ButtonControl("WiFi Settings", "OPEN");
   auto wifiBtn = new ButtonControl("\U0001f4f6 WiFi 설정", "열기");
   QObject::connect(wifiBtn, &ButtonControl::clicked, [=]() { HardwareEon::launch_wifi(); });
