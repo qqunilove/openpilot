@@ -60,20 +60,9 @@ void Sidebar::updateState(const UIState &s) {
   int strength = (int)deviceState.getNetworkStrength();
   setProperty("netStrength", strength > 0 ? strength + 1 : 0);
 
-  auto last_ping = deviceState.getLastAthenaPingTime();
-  if (last_ping == 0) {
-    if (params.getBool("PrimeRedirected")) {
-      setProperty("connectStr", "NO\nPRIME");
-      setProperty("connectStatus", danger_color);
-    } else {
-      setProperty("connectStr", "CONNECT\n오프라인");
-      setProperty("connectStatus", warning_color);
-    }
-  } else {
-    bool online = nanos_since_boot() - last_ping < 80e9;
+  bool online = net_type != network_type[cereal::DeviceState::NetworkType::NONE];
     setProperty("connectStr",  (online ? "CONNECT\n온라인" : "CONNECT\n오류"));
     setProperty("connectStatus", online ? good_color : danger_color);
-  }
 
   QColor tempStatus = danger_color;
   auto ts = deviceState.getThermalStatus();
@@ -143,7 +132,6 @@ void Sidebar::paintEvent(QPaintEvent *event) {
   snprintf(battery_str, sizeof(battery_str), "%d%%", m_batteryPercent);
   p.drawText(r, Qt::AlignCenter, battery_str);
 
-  configFont(p, "Open Sans", 30, "Bold");
   p.setPen(QColor(0xff, 0xff, 0xff));
   const QRect r2 = QRect(0, 267, event->rect().width(), 50);
   if(Hardware::EON() && net_type == network_type[cereal::DeviceState::NetworkType::WIFI])
