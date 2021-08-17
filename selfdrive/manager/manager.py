@@ -36,7 +36,7 @@ def manager_init():
     ("CompletedTrainingVersion", "0"),
     ("HasAcceptedTerms", "0"),
     ("OpenpilotEnabledToggle", "1"),
-
+    ("CommunityFeaturesToggle", "1"),
     # add
     ("IsMetric", "1"),
     ("LongControlSelect", "0"),
